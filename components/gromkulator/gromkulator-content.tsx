@@ -587,10 +587,66 @@ export function GromkulatorContent() {
                       {language === 'fr' ? 'Obtenez votre estimation personnalisee' : language === 'rs' ? 'Dobijte vasu personalizovanu procenu' : 'Get your personalized estimate'}
                     </p>
                     <a
-                      href="mailto:contact@grom.agency?subject=Demande%20estimation%20Gromkulator"
+                      href={`mailto:contact@grom-agency.com?subject=${encodeURIComponent(
+                        language === 'fr' ? 'Demande de devis - Gromkulator' : language === 'rs' ? 'Zahtev za ponudu - Gromkulator' : 'Quote Request - Gromkulator'
+                      )}&body=${encodeURIComponent(
+                        language === 'fr' 
+                          ? `Bonjour,\n\nJe souhaite recevoir un devis pour la configuration suivante :\n\n` +
+                            `--- CONFIGURATION CAMPAGNE ---\n\n` +
+                            `Plateforme : ${platform === 'instagram' ? 'Instagram' : 'TikTok'}\n` +
+                            `Type de contenu : ${selectedContent.label}\n` +
+                            `Abonnés Instagram : ${instagramFollowers.toLocaleString()}\n` +
+                            `Abonnés TikTok : ${tiktokFollowers.toLocaleString()}\n\n` +
+                            `--- PERFORMANCE ESTIMÉE ---\n\n` +
+                            `Vues : ${views.toLocaleString()}\n` +
+                            `Likes : ${likes.toLocaleString()}\n` +
+                            `Commentaires : ${comments.toLocaleString()}\n` +
+                            `Partages : ${shares.toLocaleString()}\n` +
+                            `Sauvegardes : ${saves.toLocaleString()}\n\n` +
+                            `--- OPTIONS ---\n\n` +
+                            `UGC : ${selectedUGC.label.fr}\n` +
+                            `Droits d'utilisation : ${selectedUsageRight.label.fr}\n` +
+                            `Devise : ${currency}\n\n` +
+                            `Merci de me recontacter avec une estimation détaillée.\n\nCordialement`
+                          : language === 'rs'
+                          ? `Zdravo,\n\nŽelim da dobijem ponudu za sledeću konfiguraciju:\n\n` +
+                            `--- KONFIGURACIJA KAMPANJE ---\n\n` +
+                            `Platforma: ${platform === 'instagram' ? 'Instagram' : 'TikTok'}\n` +
+                            `Tip sadržaja: ${selectedContent.label}\n` +
+                            `Instagram pratioci: ${instagramFollowers.toLocaleString()}\n` +
+                            `TikTok pratioci: ${tiktokFollowers.toLocaleString()}\n\n` +
+                            `--- PROCENJENA PERFORMANSA ---\n\n` +
+                            `Pregledi: ${views.toLocaleString()}\n` +
+                            `Lajkovi: ${likes.toLocaleString()}\n` +
+                            `Komentari: ${comments.toLocaleString()}\n` +
+                            `Deljenja: ${shares.toLocaleString()}\n` +
+                            `Sačuvano: ${saves.toLocaleString()}\n\n` +
+                            `--- OPCIJE ---\n\n` +
+                            `UGC: ${selectedUGC.label.rs}\n` +
+                            `Prava korišćenja: ${selectedUsageRight.label.rs}\n` +
+                            `Valuta: ${currency}\n\n` +
+                            `Molim vas da me kontaktirate sa detaljnom procenom.\n\nSrdačan pozdrav`
+                          : `Hello,\n\nI would like to receive a quote for the following configuration:\n\n` +
+                            `--- CAMPAIGN CONFIGURATION ---\n\n` +
+                            `Platform: ${platform === 'instagram' ? 'Instagram' : 'TikTok'}\n` +
+                            `Content type: ${selectedContent.label}\n` +
+                            `Instagram followers: ${instagramFollowers.toLocaleString()}\n` +
+                            `TikTok followers: ${tiktokFollowers.toLocaleString()}\n\n` +
+                            `--- ESTIMATED PERFORMANCE ---\n\n` +
+                            `Views: ${views.toLocaleString()}\n` +
+                            `Likes: ${likes.toLocaleString()}\n` +
+                            `Comments: ${comments.toLocaleString()}\n` +
+                            `Shares: ${shares.toLocaleString()}\n` +
+                            `Saves: ${saves.toLocaleString()}\n\n` +
+                            `--- OPTIONS ---\n\n` +
+                            `UGC: ${selectedUGC.label.en}\n` +
+                            `Usage rights: ${selectedUsageRight.label.en}\n` +
+                            `Currency: ${currency}\n\n` +
+                            `Please contact me with a detailed estimate.\n\nBest regards`
+                      )}`}
                       className="btn-glossy px-6 py-3 text-foreground text-sm inline-block font-semibold"
                     >
-                      {language === 'fr' ? 'Recevoir mon devis' : language === 'rs' ? 'Primite ponudu' : 'Get my quote'}
+                      {language === 'fr' ? 'Recevoir mon devis' : language === 'rs' ? 'Primite ponudu' : 'Get my quote'} ⚡️
                     </a>
                   </div>
                   
