@@ -158,7 +158,7 @@ export function TalentsPreviewSection() {
               <MysteryCard
                 title={mysteryTitle}
                 ctaText={language === 'rs' ? 'Pridruži se' : language === 'en' ? 'Join' : 'Rejoindre'}
-                href={`/${language}/createurs`}
+                href={`/${language}/contact`}
               />
             </ScrollAnimation>
           </div>

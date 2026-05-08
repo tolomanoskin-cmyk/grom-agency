@@ -3,6 +3,7 @@
 import { GlassCard } from './glass-card'
 import { Instagram } from 'lucide-react'
 import Image from 'next/image'
+import Link from 'next/link'
 
 // TikTok icon component
 function TikTokIcon({ className }: { className?: string }) {
@@ -103,12 +104,12 @@ export function MysteryCard({ title, subtitle, ctaText, href }: MysteryCardProps
           {subtitle && (
             <p className="text-muted-foreground text-sm mb-4">{subtitle}</p>
           )}
-          <a
-            href="mailto:contact@grom-agency.com"
+          <Link
+            href={href}
             className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/80 backdrop-blur text-primary-foreground font-medium text-sm hover:bg-primary transition-all"
           >
             {ctaText} ⚡️
-          </a>
+          </Link>
         </div>
       </div>
     </GlassCard>
