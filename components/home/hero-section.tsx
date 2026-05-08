@@ -58,13 +58,13 @@ export function HeroSection() {
         {/* CTA Buttons - Glossy style */}
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
           <Link 
-            href="/marques"
+            href={`/${language}/marques`}
             className="btn-glossy px-8 py-3 text-foreground text-base font-semibold"
           >
             {language === 'fr' ? 'Je suis une marque' : language === 'rs' ? 'Ja sam brend' : 'I am a brand'}
           </Link>
           <Link 
-            href="/createurs"
+            href={`/${language}/createurs`}
             className="btn-glossy-outline px-8 py-3 text-foreground text-base"
           >
             {language === 'fr' ? 'Je suis createur' : language === 'rs' ? 'Ja sam kreator' : 'I am a creator'}
