@@ -12,12 +12,14 @@ export function middleware(request: NextRequest) {
 
   if (pathnameHasLocale) return NextResponse.next()
 
-  // Skip for static files, api routes, etc.
+  // Skip for static files, api routes, hidden pages, etc.
   if (
     pathname.startsWith('/_next') ||
     pathname.startsWith('/api') ||
     pathname.startsWith('/images') ||
     pathname.startsWith('/creators') ||
+    pathname.startsWith('/documents') ||
+    pathname.startsWith('/ugc-france') ||
     pathname.includes('.') // files with extensions
   ) {
     return NextResponse.next()
@@ -52,7 +54,7 @@ export function middleware(request: NextRequest) {
 
 export const config = {
   matcher: [
-    // Match all paths except static files
-    '/((?!_next|api|images|creators|favicon.ico|robots.txt|sitemap.xml).*)',
+    // Match all paths except static files and hidden pages
+    '/((?!_next|api|images|creators|documents|ugc-france|favicon.ico|robots.txt|sitemap.xml).*)',
   ],
 }
