@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 
 export default function UGCFrancePage() {
   return (
-    <div className="fixed inset-0 w-full h-full">
+    <div className="fixed inset-0 w-full h-full bg-white z-50">
       <iframe
         src="/documents/ugc-talents-france.pdf"
         className="w-full h-full border-0"
