@@ -18,6 +18,7 @@ export function middleware(request: NextRequest) {
     pathname.startsWith('/api') ||
     pathname.startsWith('/images') ||
     pathname.startsWith('/creators') ||
+    pathname.startsWith('/documents') ||
     pathname.includes('.') // files with extensions
   ) {
     return NextResponse.next()
@@ -53,6 +54,6 @@ export function middleware(request: NextRequest) {
 export const config = {
   matcher: [
     // Match all paths except static files
-    '/((?!_next|api|images|creators|favicon.ico|robots.txt|sitemap.xml).*)',
+    '/((?!_next|api|images|creators|documents|favicon.ico|robots.txt|sitemap.xml).*)',
   ],
 }
