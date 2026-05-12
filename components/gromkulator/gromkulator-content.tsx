@@ -284,6 +284,49 @@ export function GromkulatorContent() {
           </p>
         </div>
 
+        {/* SEO Explanatory Text */}
+        <div className="max-w-4xl mx-auto mb-16">
+          <GlassCard className="p-6 sm:p-8">
+            <h2 className="font-display text-xl sm:text-2xl font-bold mb-4 text-center">
+              {language === 'fr' 
+                ? 'Comment calculer le budget de votre campagne d\'influence marketing dans les Balkans ?' 
+                : language === 'rs' 
+                ? 'Kako izracunati budzet vase kampanje influens marketinga na Balkanu?' 
+                : 'How to calculate your influencer marketing campaign budget in the Balkans?'}
+            </h2>
+            <div className="space-y-4 text-muted-foreground text-sm sm:text-base leading-relaxed">
+              <p>
+                {language === 'fr' 
+                  ? 'Le Gromkulator est un outil gratuit de simulation de campagne d\'influence marketing specialise pour les marches balkaniques (Serbie, Croatie, Bosnie-Herzegovine, Montenegro, Macedoine du Nord). Il vous permet d\'estimer rapidement le cout et les performances potentielles de vos campagnes sur Instagram et TikTok.' 
+                  : language === 'rs' 
+                  ? 'Gromkulator je besplatan alat za simulaciju kampanja influens marketinga specijalizovan za balkanska trzista (Srbija, Hrvatska, Bosna i Hercegovina, Crna Gora, Severna Makedonija). Omogucava vam da brzo procenite troskove i potencijalne performanse vasih kampanja na Instagramu i TikToku.' 
+                  : 'The Gromkulator is a free influencer marketing campaign simulation tool specialized for Balkan markets (Serbia, Croatia, Bosnia-Herzegovina, Montenegro, North Macedonia). It allows you to quickly estimate the cost and potential performance of your campaigns on Instagram and TikTok.'}
+              </p>
+              <p>
+                {language === 'fr' 
+                  ? 'Notre calculateur prend en compte plusieurs facteurs cles : le type de contenu (Story, Post, Reel, Video TikTok, Live...), le nombre d\'abonnes du createur, les options UGC (User Generated Content), et les droits d\'utilisation publicitaire. Les estimations sont basees sur les taux d\'engagement moyens observes sur les marches balkaniques.' 
+                  : language === 'rs' 
+                  ? 'Nas kalkulator uzima u obzir nekoliko kljucnih faktora: tip sadrzaja (Story, Post, Reel, TikTok Video, Live...), broj pratilaca kreatora, UGC opcije (User Generated Content) i prava koriscenja za oglasavanje. Procene se zasnivaju na prosecnim stopama angazovanja uocenim na balkanskim trzistima.' 
+                  : 'Our calculator takes into account several key factors: content type (Story, Post, Reel, TikTok Video, Live...), creator follower count, UGC (User Generated Content) options, and advertising usage rights. Estimates are based on average engagement rates observed in Balkan markets.'}
+              </p>
+              <p>
+                {language === 'fr' 
+                  ? 'L\'EMV (Earned Media Value) represente la valeur mediatique equivalente de votre campagne, calculee a partir des interactions estimees (likes, commentaires, partages, vues, sauvegardes). C\'est un indicateur essentiel pour mesurer le retour sur investissement de vos collaborations avec des influenceurs dans les Balkans.' 
+                  : language === 'rs' 
+                  ? 'EMV (Earned Media Value) predstavlja ekvivalentnu medijsku vrednost vase kampanje, izracunatu na osnovu procenjenih interakcija (lajkovi, komentari, deljenja, pregledi, sacuvano). To je kljucni pokazatelj za merenje povrata investicije vasih saradnji sa influenserima na Balkanu.' 
+                  : 'EMV (Earned Media Value) represents the equivalent media value of your campaign, calculated from estimated interactions (likes, comments, shares, views, saves). It\'s an essential indicator for measuring the return on investment of your collaborations with influencers in the Balkans.'}
+              </p>
+              <p className="font-medium text-foreground">
+                {language === 'fr' 
+                  ? 'Configurez votre campagne ci-dessous et recevez une estimation personnalisee en quelques clics. Pour un devis detaille adapte a vos objectifs, notre equipe basee a Paris et Belgrade est a votre disposition.' 
+                  : language === 'rs' 
+                  ? 'Konfigurisite svoju kampanju ispod i primite personalizovanu procenu u nekoliko klikova. Za detaljnu ponudu prilagodjenu vasim ciljevima, nas tim sa sedistem u Parizu i Beogradu vam stoji na raspolaganju.' 
+                  : 'Configure your campaign below and receive a personalized estimate in just a few clicks. For a detailed quote tailored to your objectives, our team based in Paris and Belgrade is at your service.'}
+              </p>
+            </div>
+          </GlassCard>
+        </div>
+
         {/* Currency selector & Reset */}
         <div className="flex items-center justify-end gap-4 mb-6">
           <div className="relative">
