@@ -1,4 +1,5 @@
 import { Metadata } from 'next'
+import { WhatsAppButton } from './whatsapp-button'
 
 export const metadata: Metadata = {
   title: 'UGC Talents France - Grom Agency',
@@ -17,6 +18,7 @@ export default function UGCFrancePage() {
         className="w-full h-full border-0"
         title="UGC Talents France - Grom Agency"
       />
+      <WhatsAppButton />
     </div>
   )
 }

@@ -10,18 +10,6 @@ import { ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react'
 // Sample creators data
 const featuredCreators: Creator[] = [
   {
-    id: '1',
-    name: 'Ana Marija',
-    handle: '@_veseli_plamicak_',
-    niche: 'Lifestyle / Beauty',
-    country: '',
-    flag: '🇷🇸',
-    photo: '/creators/ana-marija.png',
-    followers: '125K',
-    instagram: '_veseli_plamicak_',
-    tiktok: 'veseliplamicak',
-  },
-  {
     id: '2',
     name: 'Milica',
     handle: '@__mimaa96__',
@@ -31,6 +19,17 @@ const featuredCreators: Creator[] = [
     photo: '/creators/milica.png',
     followers: '50K',
     instagram: '__mimaa96__',
+  },
+  {
+    id: '3',
+    name: 'Sladjana',
+    handle: '@sladjana__milosevic',
+    niche: 'Lifestyle / Beauty',
+    country: '',
+    flag: '🇷🇸',
+    photo: '/creators/sladjana.png',
+    followers: '100K',
+    instagram: 'sladjana__milosevic',
   },
 ]
 
