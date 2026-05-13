@@ -9,18 +9,6 @@ import { CitySkyline } from '@/components/city-skyline'
 // Full creators roster
 const creators: Creator[] = [
   {
-    id: '1',
-    name: 'Ana Marija',
-    handle: '@_veseli_plamicak_',
-    niche: 'Lifestyle / Beauty',
-    country: '',
-    flag: '🇷🇸',
-    photo: '/creators/ana-marija.png',
-    followers: '125K',
-    instagram: '_veseli_plamicak_',
-    tiktok: 'veseliplamicak',
-  },
-  {
     id: '2',
     name: 'Milica',
     handle: '@__mimaa96__',
