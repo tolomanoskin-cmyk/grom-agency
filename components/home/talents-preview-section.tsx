@@ -20,6 +20,17 @@ const featuredCreators: Creator[] = [
     followers: '50K',
     instagram: '__mimaa96__',
   },
+  {
+    id: '3',
+    name: 'Sladjana',
+    handle: '@sladjana__milosevic',
+    niche: 'Lifestyle / Beauty',
+    country: '',
+    flag: '🇷🇸',
+    photo: '/creators/sladjana.png',
+    followers: '100K',
+    instagram: 'sladjana__milosevic',
+  },
 ]
 
 // Carousel threshold - if 3+ creators, show carousel

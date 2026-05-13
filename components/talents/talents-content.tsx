@@ -19,6 +19,17 @@ const creators: Creator[] = [
     followers: '50K',
     instagram: '__mimaa96__',
   },
+  {
+    id: '3',
+    name: 'Sladjana',
+    handle: '@sladjana__milosevic',
+    niche: 'Lifestyle / Beauty',
+    country: '',
+    flag: '🇷🇸',
+    photo: '/creators/sladjana.png',
+    followers: '100K',
+    instagram: 'sladjana__milosevic',
+  },
 ]
 
 export function TalentsContent() {
