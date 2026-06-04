@@ -722,6 +722,84 @@ export function GromkulatorContent() {
           </div>
         </div>
 
+        {/* CTA Section - Parlons-en ? */}
+        <div className="max-w-4xl mx-auto mt-16">
+          <GlassCard className="p-8 sm:p-12" glow>
+            <div className="text-center mb-8">
+              <h2 className="font-display text-2xl sm:text-3xl lg:text-4xl font-bold mb-3">
+                {language === 'fr' 
+                  ? 'Parlons-en ?' 
+                  : language === 'rs' 
+                  ? 'Da razgovaramo?' 
+                  : 'Let\'s talk?'}
+              </h2>
+              <p className="text-muted-foreground max-w-xl mx-auto">
+                {language === 'fr' 
+                  ? 'Vous avez un projet de campagne ? Notre equipe vous accompagne pour definir la strategie ideale.' 
+                  : language === 'rs' 
+                  ? 'Imate projekat kampanje? Nas tim ce vas voditi do idealne strategije.' 
+                  : 'Have a campaign project? Our team will guide you to the ideal strategy.'}
+              </p>
+            </div>
+            
+            <form className="space-y-4 max-w-md mx-auto">
+              <div className="grid sm:grid-cols-2 gap-4">
+                <input
+                  type="text"
+                  placeholder={language === 'fr' ? 'Prenom' : language === 'rs' ? 'Ime' : 'First name'}
+                  className="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary/50 transition-colors"
+                  required
+                />
+                <input
+                  type="text"
+                  placeholder={language === 'fr' ? 'Nom' : language === 'rs' ? 'Prezime' : 'Last name'}
+                  className="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary/50 transition-colors"
+                  required
+                />
+              </div>
+              <input
+                type="email"
+                placeholder="Email"
+                className="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary/50 transition-colors"
+                required
+              />
+              <select
+                className="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-sm text-foreground focus:outline-none focus:border-primary/50 transition-colors appearance-none"
+                required
+              >
+                <option value="" className="bg-background">
+                  {language === 'fr' ? 'Vous etes...' : language === 'rs' ? 'Vi ste...' : 'You are...'}
+                </option>
+                <option value="brand" className="bg-background">
+                  {language === 'fr' ? 'Une marque' : language === 'rs' ? 'Brend' : 'A brand'}
+                </option>
+                <option value="agency" className="bg-background">
+                  {language === 'fr' ? 'Une agence' : language === 'rs' ? 'Agencija' : 'An agency'}
+                </option>
+                <option value="creator" className="bg-background">
+                  {language === 'fr' ? 'Un createur' : language === 'rs' ? 'Kreator' : 'A creator'}
+                </option>
+                <option value="other" className="bg-background">
+                  {language === 'fr' ? 'Autre' : language === 'rs' ? 'Ostalo' : 'Other'}
+                </option>
+              </select>
+              <textarea
+                placeholder={language === 'fr' ? 'Parlez-nous de votre projet...' : language === 'rs' ? 'Recite nam o svom projektu...' : 'Tell us about your project...'}
+                rows={3}
+                className="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary/50 transition-colors resize-none"
+              />
+              <a
+                href={`mailto:rs@grom-agency.com?subject=${encodeURIComponent(
+                  language === 'fr' ? 'Demande depuis Gromkulator' : language === 'rs' ? 'Zahtev sa Gromkulatora' : 'Request from Gromkulator'
+                )}`}
+                className="btn-glossy w-full px-6 py-4 text-foreground text-base font-semibold flex items-center justify-center gap-2"
+              >
+                {language === 'fr' ? 'Envoyer ma demande' : language === 'rs' ? 'Posaljite zahtev' : 'Send my request'}
+              </a>
+            </form>
+          </GlassCard>
+        </div>
+
         {/* SEO Explanatory Text - Bottom */}
         <div className="max-w-4xl mx-auto mt-16">
           <GlassCard className="p-6 sm:p-8">
