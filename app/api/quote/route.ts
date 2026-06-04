@@ -123,7 +123,7 @@ Currency: ${currency}
         },
         body: JSON.stringify({
           from: 'Gromkulator <noreply@grom-agency.com>',
-          to: ['contact@grom-agency.com'],
+          to: ['rs@grom-agency.com'],
           reply_to: email,
           subject: subject,
           text: body,
