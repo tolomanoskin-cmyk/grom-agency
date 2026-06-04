@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useMemo } from 'react'
+import Link from 'next/link'
 import { useLanguage } from '@/components/language-provider'
 import { GlassCard } from '@/components/glass-card'
 import { 
@@ -19,11 +20,7 @@ import {
   Tv,
   Radio,
   Users,
-  ChevronDown,
-  Send,
-  Mail,
-  CheckCircle,
-  Loader2
+  ChevronDown
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
@@ -159,10 +156,6 @@ export function GromkulatorContent() {
   const [saves, setSaves] = useState(100)
   
   // Quote form
-  const [quoteEmail, setQuoteEmail] = useState('')
-  const [quoteStatus, setQuoteStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle')
-  const [quoteError, setQuoteError] = useState('')
-  
   // UGC & Usage rights
   const [ugcOption, setUgcOption] = useState('none')
   const [usageRight, setUsageRight] = useState('organic')
@@ -282,51 +275,6 @@ export function GromkulatorContent() {
       }
       return [...prev, id]
     })
-  }
-
-  const handleQuoteSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    
-    if (!quoteEmail || !quoteEmail.includes('@')) {
-      setQuoteError(language === 'fr' ? 'Veuillez entrer un email valide' : language === 'rs' ? 'Unesite validnu email adresu' : 'Please enter a valid email')
-      return
-    }
-    
-    setQuoteStatus('loading')
-    setQuoteError('')
-    
-    try {
-      const response = await fetch('/api/quote', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          email: quoteEmail,
-          language,
-          platforms: selectedPlatforms.join(', '),
-          contentTypes: selectedContentTypes.join(', '),
-          instagramFollowers,
-          tiktokFollowers,
-          views,
-          likes,
-          comments,
-          shares,
-          saves,
-          ugc: selectedUGC.label[language] || selectedUGC.label.en,
-          usageRights: selectedUsageRight.label[language] || selectedUsageRight.label.en,
-          currency,
-        }),
-      })
-      
-      if (response.ok) {
-        setQuoteStatus('success')
-        setQuoteEmail('')
-      } else {
-        throw new Error('Failed to send')
-      }
-    } catch {
-      setQuoteStatus('error')
-      setQuoteError(language === 'fr' ? 'Erreur lors de l\'envoi. Reessayez.' : language === 'rs' ? 'Greska pri slanju. Pokusajte ponovo.' : 'Error sending. Please try again.')
-    }
   }
 
   const formatNumber = (num: number) => {
@@ -694,82 +642,31 @@ export function GromkulatorContent() {
                   {t('results')}
                 </h3>
 
-                <div className="space-y-4 relative">
-                  {/* Blurred prices overlay */}
-                  <div className="absolute inset-0 backdrop-blur-md bg-white/5 rounded-xl z-10 flex flex-col items-center justify-center p-6 text-center">
-                    {quoteStatus === 'success' ? (
-                      <div className="flex flex-col items-center gap-3">
-                        <CheckCircle className="h-10 w-10 text-green-500" />
-                        <p className="text-sm text-foreground font-medium">
-                          {language === 'fr' ? 'Demande envoyee ! Nous vous recontactons rapidement.' : language === 'rs' ? 'Zahtev poslat! Kontaktiraćemo vas uskoro.' : 'Request sent! We\'ll contact you shortly.'}
-                        </p>
-                        <button
-                          onClick={() => setQuoteStatus('idle')}
-                          className="text-xs text-muted-foreground hover:text-foreground transition-colors underline"
-                        >
-                          {language === 'fr' ? 'Envoyer une autre demande' : language === 'rs' ? 'Pošalji novi zahtev' : 'Send another request'}
-                        </button>
-                      </div>
-                    ) : (
-                      <>
-                        <p className="text-sm text-muted-foreground mb-4">
-                          {language === 'fr' ? 'Obtenez votre estimation personnalisee' : language === 'rs' ? 'Dobijte vasu personalizovanu procenu' : 'Get your personalized estimate'}
-                        </p>
-                        <form onSubmit={handleQuoteSubmit} className="w-full max-w-xs space-y-3">
-                          <div className="relative">
-                            <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                            <input
-                              type="email"
-                              placeholder={language === 'fr' ? 'Votre email' : language === 'rs' ? 'Vaš email' : 'Your email'}
-                              value={quoteEmail}
-                              onChange={(e) => setQuoteEmail(e.target.value)}
-                              className="w-full pl-10 pr-4 py-3 rounded-xl bg-white/10 border border-white/20 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary/50 transition-colors"
-                              required
-                            />
-                          </div>
-                          {quoteError && (
-                            <p className="text-xs text-red-400">{quoteError}</p>
-                          )}
-                          <button
-                            type="submit"
-                            disabled={quoteStatus === 'loading'}
-                            className="btn-glossy w-full px-6 py-3 text-foreground text-sm font-semibold flex items-center justify-center gap-2 disabled:opacity-50"
-                          >
-                            {quoteStatus === 'loading' ? (
-                              <Loader2 className="h-4 w-4 animate-spin" />
-                            ) : (
-                              <Send className="h-4 w-4" />
-                            )}
-                            {language === 'fr' ? 'Recevoir mon devis' : language === 'rs' ? 'Primite ponudu' : 'Get my quote'}
-                          </button>
-                        </form>
-                      </>
-                    )}
-                  </div>
+                <div className="space-y-4">
                   
                   {/* Base Price */}
                   <div className="flex justify-between items-center py-3 border-b border-white/10">
                     <span className="text-muted-foreground">{t('basePrice')}</span>
-                    <span className="font-medium blur-sm select-none">{formatCurrency(calculations.basePrice)}</span>
+                    <span className="font-medium">{formatCurrency(calculations.basePrice)}</span>
                   </div>
 
                   {/* Price with Rights */}
                   <div className="flex justify-between items-center py-3 border-b border-white/10">
                     <span className="text-muted-foreground">{t('priceWithRights')}</span>
-                    <span className="font-medium blur-sm select-none">{formatCurrency(calculations.priceWithRights)}</span>
+                    <span className="font-medium">{formatCurrency(calculations.priceWithRights)}</span>
                   </div>
 
                   {/* UGC Cost */}
                   <div className="flex justify-between items-center py-3 border-b border-white/10">
                     <span className="text-muted-foreground">{t('ugcCost')}</span>
-                    <span className="font-medium blur-sm select-none">{formatCurrency(calculations.ugcCost)}</span>
+                    <span className="font-medium">{formatCurrency(calculations.ugcCost)}</span>
                   </div>
 
                   {/* Final Price - Highlighted */}
                   <div className="p-4 rounded-xl bg-primary/10 border border-primary/20">
                     <div className="flex justify-between items-center">
                       <span className="font-semibold text-primary">{t('finalPrice')}</span>
-                      <span className="text-2xl font-display font-bold text-primary blur-sm select-none">
+                      <span className="text-2xl font-display font-bold text-primary">
                         {formatCurrency(calculations.finalPrice)}
                       </span>
                     </div>
@@ -824,6 +721,34 @@ export function GromkulatorContent() {
               </GlassCard>
             </div>
           </div>
+        </div>
+
+        {/* CTA Section - Parlons-en ? */}
+        <div className="max-w-4xl mx-auto mt-16">
+          <GlassCard className="p-8 sm:p-12" glow>
+            <div className="text-center">
+              <h2 className="font-display text-2xl sm:text-3xl lg:text-4xl font-bold mb-3">
+                {language === 'fr' 
+                  ? 'Parlons-en ?' 
+                  : language === 'rs' 
+                  ? 'Da razgovaramo?' 
+                  : 'Let\'s talk?'}
+              </h2>
+              <p className="text-muted-foreground max-w-xl mx-auto mb-8">
+                {language === 'fr' 
+                  ? 'Vous avez un projet de campagne ? Notre equipe vous accompagne pour definir la strategie ideale.' 
+                  : language === 'rs' 
+                  ? 'Imate projekat kampanje? Nas tim ce vas voditi do idealne strategije.' 
+                  : 'Have a campaign project? Our team will guide you to the ideal strategy.'}
+              </p>
+              <Link
+                href={`/${language}/contact`}
+                className="btn-glossy px-8 py-4 text-foreground text-base font-semibold inline-flex items-center gap-2"
+              >
+                {language === 'fr' ? 'Nous contacter' : language === 'rs' ? 'Kontaktirajte nas' : 'Contact us'}
+              </Link>
+            </div>
+          </GlassCard>
         </div>
 
         {/* SEO Explanatory Text - Bottom */}

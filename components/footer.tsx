@@ -113,10 +113,10 @@ export function Footer() {
             <ul className="space-y-3 text-muted-foreground">
               <li>
                 <a
-                  href="mailto:contact@grom-agency.com"
+                  href="mailto:rs@grom-agency.com"
                   className="hover:text-foreground transition-colors"
                 >
-                  contact@grom-agency.com
+                  rs@grom-agency.com
                 </a>
               </li>
               <li className="flex items-center gap-2">
@@ -182,10 +182,10 @@ export function Footer() {
           <p>&copy; 2025 Grom Agency &mdash; grom-agency.com</p>
           <p>
             <a
-              href="mailto:contact@grom-agency.com"
+              href="mailto:rs@grom-agency.com"
               className="hover:text-foreground transition-colors"
             >
-              contact@grom-agency.com
+              rs@grom-agency.com
             </a>
           </p>
         </div>
