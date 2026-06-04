@@ -19,7 +19,11 @@ import {
   Tv,
   Radio,
   Users,
-  ChevronDown
+  ChevronDown,
+  Send,
+  Mail,
+  CheckCircle,
+  Loader2
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
@@ -154,6 +158,11 @@ export function GromkulatorContent() {
   const [shares, setShares] = useState(20)
   const [saves, setSaves] = useState(100)
   
+  // Quote form
+  const [quoteEmail, setQuoteEmail] = useState('')
+  const [quoteStatus, setQuoteStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle')
+  const [quoteError, setQuoteError] = useState('')
+  
   // UGC & Usage rights
   const [ugcOption, setUgcOption] = useState('none')
   const [usageRight, setUsageRight] = useState('organic')
@@ -215,6 +224,51 @@ export function GromkulatorContent() {
     setSaves(100)
     setUgcOption('none')
     setUsageRight('organic')
+  }
+
+  const handleQuoteSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    
+    if (!quoteEmail || !quoteEmail.includes('@')) {
+      setQuoteError(language === 'fr' ? 'Veuillez entrer un email valide' : language === 'rs' ? 'Unesite validnu email adresu' : 'Please enter a valid email')
+      return
+    }
+    
+    setQuoteStatus('loading')
+    setQuoteError('')
+    
+    try {
+      const response = await fetch('/api/quote', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: quoteEmail,
+          language,
+          platform,
+          contentType: selectedContent.label,
+          instagramFollowers,
+          tiktokFollowers,
+          views,
+          likes,
+          comments,
+          shares,
+          saves,
+          ugc: selectedUGC.label[language] || selectedUGC.label.en,
+          usageRights: selectedUsageRight.label[language] || selectedUsageRight.label.en,
+          currency,
+        }),
+      })
+      
+      if (response.ok) {
+        setQuoteStatus('success')
+        setQuoteEmail('')
+      } else {
+        throw new Error('Failed to send')
+      }
+    } catch {
+      setQuoteStatus('error')
+      setQuoteError(language === 'fr' ? 'Erreur lors de l\'envoi. Reessayez.' : language === 'rs' ? 'Greska pri slanju. Pokusajte ponovo.' : 'Error sending. Please try again.')
+    }
   }
 
   const formatNumber = (num: number) => {
@@ -583,71 +637,54 @@ export function GromkulatorContent() {
                 <div className="space-y-4 relative">
                   {/* Blurred prices overlay */}
                   <div className="absolute inset-0 backdrop-blur-md bg-white/5 rounded-xl z-10 flex flex-col items-center justify-center p-6 text-center">
-                    <p className="text-sm text-muted-foreground mb-4">
-                      {language === 'fr' ? 'Obtenez votre estimation personnalisee' : language === 'rs' ? 'Dobijte vasu personalizovanu procenu' : 'Get your personalized estimate'}
-                    </p>
-                    <a
-                      href={`mailto:contact@grom-agency.com?subject=${encodeURIComponent(
-                        language === 'fr' ? 'Demande de devis - Gromkulator' : language === 'rs' ? 'Zahtev za ponudu - Gromkulator' : 'Quote Request - Gromkulator'
-                      )}&body=${encodeURIComponent(
-                        language === 'fr' 
-                          ? `Bonjour,\n\nJe souhaite recevoir un devis pour la configuration suivante :\n\n` +
-                            `--- CONFIGURATION CAMPAGNE ---\n\n` +
-                            `Plateforme : ${platform === 'instagram' ? 'Instagram' : 'TikTok'}\n` +
-                            `Type de contenu : ${selectedContent.label}\n` +
-                            `Abonnés Instagram : ${instagramFollowers.toLocaleString()}\n` +
-                            `Abonnés TikTok : ${tiktokFollowers.toLocaleString()}\n\n` +
-                            `--- PERFORMANCE ESTIMÉE ---\n\n` +
-                            `Vues : ${views.toLocaleString()}\n` +
-                            `Likes : ${likes.toLocaleString()}\n` +
-                            `Commentaires : ${comments.toLocaleString()}\n` +
-                            `Partages : ${shares.toLocaleString()}\n` +
-                            `Sauvegardes : ${saves.toLocaleString()}\n\n` +
-                            `--- OPTIONS ---\n\n` +
-                            `UGC : ${selectedUGC.label.fr}\n` +
-                            `Droits d'utilisation : ${selectedUsageRight.label.fr}\n` +
-                            `Devise : ${currency}\n\n` +
-                            `Merci de me recontacter avec une estimation détaillée.\n\nCordialement`
-                          : language === 'rs'
-                          ? `Zdravo,\n\nŽelim da dobijem ponudu za sledeću konfiguraciju:\n\n` +
-                            `--- KONFIGURACIJA KAMPANJE ---\n\n` +
-                            `Platforma: ${platform === 'instagram' ? 'Instagram' : 'TikTok'}\n` +
-                            `Tip sadržaja: ${selectedContent.label}\n` +
-                            `Instagram pratioci: ${instagramFollowers.toLocaleString()}\n` +
-                            `TikTok pratioci: ${tiktokFollowers.toLocaleString()}\n\n` +
-                            `--- PROCENJENA PERFORMANSA ---\n\n` +
-                            `Pregledi: ${views.toLocaleString()}\n` +
-                            `Lajkovi: ${likes.toLocaleString()}\n` +
-                            `Komentari: ${comments.toLocaleString()}\n` +
-                            `Deljenja: ${shares.toLocaleString()}\n` +
-                            `Sačuvano: ${saves.toLocaleString()}\n\n` +
-                            `--- OPCIJE ---\n\n` +
-                            `UGC: ${selectedUGC.label.rs}\n` +
-                            `Prava korišćenja: ${selectedUsageRight.label.rs}\n` +
-                            `Valuta: ${currency}\n\n` +
-                            `Molim vas da me kontaktirate sa detaljnom procenom.\n\nSrdačan pozdrav`
-                          : `Hello,\n\nI would like to receive a quote for the following configuration:\n\n` +
-                            `--- CAMPAIGN CONFIGURATION ---\n\n` +
-                            `Platform: ${platform === 'instagram' ? 'Instagram' : 'TikTok'}\n` +
-                            `Content type: ${selectedContent.label}\n` +
-                            `Instagram followers: ${instagramFollowers.toLocaleString()}\n` +
-                            `TikTok followers: ${tiktokFollowers.toLocaleString()}\n\n` +
-                            `--- ESTIMATED PERFORMANCE ---\n\n` +
-                            `Views: ${views.toLocaleString()}\n` +
-                            `Likes: ${likes.toLocaleString()}\n` +
-                            `Comments: ${comments.toLocaleString()}\n` +
-                            `Shares: ${shares.toLocaleString()}\n` +
-                            `Saves: ${saves.toLocaleString()}\n\n` +
-                            `--- OPTIONS ---\n\n` +
-                            `UGC: ${selectedUGC.label.en}\n` +
-                            `Usage rights: ${selectedUsageRight.label.en}\n` +
-                            `Currency: ${currency}\n\n` +
-                            `Please contact me with a detailed estimate.\n\nBest regards`
-                      )}`}
-                      className="btn-glossy px-6 py-3 text-foreground text-sm inline-block font-semibold"
-                    >
-                      {language === 'fr' ? 'Recevoir mon devis' : language === 'rs' ? 'Primite ponudu' : 'Get my quote'} ⚡️
-                    </a>
+                    {quoteStatus === 'success' ? (
+                      <div className="flex flex-col items-center gap-3">
+                        <CheckCircle className="h-10 w-10 text-green-500" />
+                        <p className="text-sm text-foreground font-medium">
+                          {language === 'fr' ? 'Demande envoyee ! Nous vous recontactons rapidement.' : language === 'rs' ? 'Zahtev poslat! Kontaktiraćemo vas uskoro.' : 'Request sent! We\'ll contact you shortly.'}
+                        </p>
+                        <button
+                          onClick={() => setQuoteStatus('idle')}
+                          className="text-xs text-muted-foreground hover:text-foreground transition-colors underline"
+                        >
+                          {language === 'fr' ? 'Envoyer une autre demande' : language === 'rs' ? 'Pošalji novi zahtev' : 'Send another request'}
+                        </button>
+                      </div>
+                    ) : (
+                      <>
+                        <p className="text-sm text-muted-foreground mb-4">
+                          {language === 'fr' ? 'Obtenez votre estimation personnalisee' : language === 'rs' ? 'Dobijte vasu personalizovanu procenu' : 'Get your personalized estimate'}
+                        </p>
+                        <form onSubmit={handleQuoteSubmit} className="w-full max-w-xs space-y-3">
+                          <div className="relative">
+                            <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                            <input
+                              type="email"
+                              placeholder={language === 'fr' ? 'Votre email' : language === 'rs' ? 'Vaš email' : 'Your email'}
+                              value={quoteEmail}
+                              onChange={(e) => setQuoteEmail(e.target.value)}
+                              className="w-full pl-10 pr-4 py-3 rounded-xl bg-white/10 border border-white/20 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary/50 transition-colors"
+                              required
+                            />
+                          </div>
+                          {quoteError && (
+                            <p className="text-xs text-red-400">{quoteError}</p>
+                          )}
+                          <button
+                            type="submit"
+                            disabled={quoteStatus === 'loading'}
+                            className="btn-glossy w-full px-6 py-3 text-foreground text-sm font-semibold flex items-center justify-center gap-2 disabled:opacity-50"
+                          >
+                            {quoteStatus === 'loading' ? (
+                              <Loader2 className="h-4 w-4 animate-spin" />
+                            ) : (
+                              <Send className="h-4 w-4" />
+                            )}
+                            {language === 'fr' ? 'Recevoir mon devis' : language === 'rs' ? 'Primite ponudu' : 'Get my quote'}
+                          </button>
+                        </form>
+                      </>
+                    )}
                   </div>
                   
                   {/* Base Price */}
