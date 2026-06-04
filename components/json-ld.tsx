@@ -7,7 +7,7 @@ export function JsonLd() {
     url: 'https://grom-agency.com',
     logo: 'https://grom-agency.com/images/grom-logo.png',
     description: 'Agence d\'influence marketing connectant les marques françaises aux créateurs de contenu balkaniques.',
-    email: 'contact@grom-agency.com',
+    email: 'rs@grom-agency.com',
     sameAs: [
       'https://www.instagram.com/grom.agency/',
       'https://www.linkedin.com/company/grom-agency/',

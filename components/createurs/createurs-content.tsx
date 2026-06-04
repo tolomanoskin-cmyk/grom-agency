@@ -272,7 +272,7 @@ export function CreateursContent() {
 
                 {/* Submit */}
                 <a
-                  href="mailto:contact@grom-agency.com"
+                  href="mailto:rs@grom-agency.com"
                   className="w-full inline-flex items-center justify-center gap-2 px-6 py-4 rounded-xl bg-primary text-primary-foreground font-medium hover:bg-primary/90 transition-all"
                 >
                   {t('form.submit.join')} ⚡️
