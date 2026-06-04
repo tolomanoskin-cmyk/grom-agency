@@ -147,9 +147,9 @@ export function GromkulatorContent() {
   const [instagramFollowers, setInstagramFollowers] = useState(50000)
   const [tiktokFollowers, setTiktokFollowers] = useState(30000)
   
-  // Content selection
-  const [platform, setPlatform] = useState<Platform>('instagram')
-  const [contentType, setContentType] = useState<string>('reel')
+  // Content selection - multi-select
+  const [selectedPlatforms, setSelectedPlatforms] = useState<Platform[]>(['instagram'])
+  const [selectedContentTypes, setSelectedContentTypes] = useState<string[]>(['reel'])
   
   // Performance inputs
   const [views, setViews] = useState(10000)
@@ -171,17 +171,47 @@ export function GromkulatorContent() {
   const [currency, setCurrency] = useState<Currency>('EUR')
   const [currencyDropdownOpen, setCurrencyDropdownOpen] = useState(false)
 
-  const contentTypes = platform === 'instagram' ? INSTAGRAM_CONTENT : TIKTOK_CONTENT
-  const selectedContent = contentTypes.find(c => c.id === contentType) || contentTypes[0]
+  // Get all available content types based on selected platforms
+  const availableContentTypes = useMemo(() => {
+    const types: typeof INSTAGRAM_CONTENT = []
+    if (selectedPlatforms.includes('instagram')) {
+      INSTAGRAM_CONTENT.forEach(c => {
+        if (!types.find(t => t.id === c.id)) types.push(c)
+      })
+    }
+    if (selectedPlatforms.includes('tiktok')) {
+      TIKTOK_CONTENT.forEach(c => {
+        if (!types.find(t => t.id === c.id)) types.push(c)
+      })
+    }
+    return types.length > 0 ? types : INSTAGRAM_CONTENT
+  }, [selectedPlatforms])
+
   const selectedUGC = UGC_OPTIONS.find(u => u.id === ugcOption) || UGC_OPTIONS[0]
   const selectedUsageRight = USAGE_RIGHTS.find(u => u.id === usageRight) || USAGE_RIGHTS[0]
 
-  // Calculations
+  // Calculations - aggregate across all selected content types
   const calculations = useMemo(() => {
     const rate = CURRENCY_RATES[currency]
     
-    // Step 1: Base price (CPM model)
-    const basePrice = (views / 1000) * selectedContent.cpm
+    // Get selected content items
+    const selectedContents = availableContentTypes.filter(c => selectedContentTypes.includes(c.id))
+    if (selectedContents.length === 0) {
+      return {
+        basePrice: 0,
+        priceWithRights: 0,
+        ugcCost: 0,
+        finalPrice: 0,
+        emv: 0,
+        roi: 0,
+      }
+    }
+    
+    // Sum CPM for all selected content types
+    const totalCpm = selectedContents.reduce((sum, c) => sum + c.cpm, 0)
+    
+    // Step 1: Base price (CPM model) - sum of all selected content types
+    const basePrice = (views / 1000) * totalCpm
     
     // Step 2: Apply usage rights
     const priceWithRights = basePrice * selectedUsageRight.multiplier
@@ -190,14 +220,20 @@ export function GromkulatorContent() {
     const ugcPrice = selectedUGC.price
     const finalPrice = priceWithRights + ugcPrice
     
-    // EMV Calculation
-    const emvValues = EMV_VALUES[platform]
-    const emv = 
-      (likes * emvValues.like) +
-      (comments * emvValues.comment) +
-      (views * emvValues.view) +
-      (shares * emvValues.share) +
-      (saves * emvValues.save)
+    // EMV Calculation - average across selected platforms
+    let emv = 0
+    selectedPlatforms.forEach(p => {
+      const emvValues = EMV_VALUES[p]
+      emv += 
+        (likes * emvValues.like) +
+        (comments * emvValues.comment) +
+        (views * emvValues.view) +
+        (shares * emvValues.share) +
+        (saves * emvValues.save)
+    })
+    if (selectedPlatforms.length > 1) {
+      emv = emv / selectedPlatforms.length
+    }
     
     // ROI
     const roi = finalPrice > 0 ? emv / finalPrice : 0
@@ -210,13 +246,13 @@ export function GromkulatorContent() {
       emv: emv * rate,
       roi,
     }
-  }, [views, selectedContent, selectedUsageRight, selectedUGC, platform, likes, comments, shares, saves, currency])
+  }, [views, availableContentTypes, selectedContentTypes, selectedUsageRight, selectedUGC, selectedPlatforms, likes, comments, shares, saves, currency])
 
   const handleReset = () => {
     setInstagramFollowers(50000)
     setTiktokFollowers(30000)
-    setPlatform('instagram')
-    setContentType('reel')
+    setSelectedPlatforms(['instagram'])
+    setSelectedContentTypes(['reel'])
     setViews(10000)
     setLikes(500)
     setComments(50)
@@ -224,6 +260,28 @@ export function GromkulatorContent() {
     setSaves(100)
     setUgcOption('none')
     setUsageRight('organic')
+  }
+
+  const togglePlatform = (p: Platform) => {
+    setSelectedPlatforms(prev => {
+      if (prev.includes(p)) {
+        // Don't allow deselecting all platforms
+        if (prev.length === 1) return prev
+        return prev.filter(x => x !== p)
+      }
+      return [...prev, p]
+    })
+  }
+
+  const toggleContentType = (id: string) => {
+    setSelectedContentTypes(prev => {
+      if (prev.includes(id)) {
+        // Don't allow deselecting all content types
+        if (prev.length === 1) return prev
+        return prev.filter(x => x !== id)
+      }
+      return [...prev, id]
+    })
   }
 
   const handleQuoteSubmit = async (e: React.FormEvent) => {
@@ -244,8 +302,8 @@ export function GromkulatorContent() {
         body: JSON.stringify({
           email: quoteEmail,
           language,
-          platform,
-          contentType: selectedContent.label,
+          platforms: selectedPlatforms.join(', '),
+          contentTypes: selectedContentTypes.join(', '),
           instagramFollowers,
           tiktokFollowers,
           views,
@@ -281,12 +339,6 @@ export function GromkulatorContent() {
   const formatCurrency = (num: number) => {
     const symbol = CURRENCY_SYMBOLS[currency]
     return currency === 'CHF' ? `${formatNumber(num)} ${symbol}` : `${formatNumber(num)} ${symbol}`
-  }
-
-  // Update content type when platform changes
-  const handlePlatformChange = (newPlatform: Platform) => {
-    setPlatform(newPlatform)
-    setContentType(newPlatform === 'instagram' ? 'reel' : 'video')
   }
 
   const labels = {
@@ -419,18 +471,23 @@ export function GromkulatorContent() {
                 {t('contentSelection')}
               </h3>
               
-              {/* Platform */}
+              {/* Platform - Multi-select */}
               <div className="mb-6">
-                <label className="text-sm font-medium mb-3 block">{t('platformLabel')}</label>
+                <label className="text-sm font-medium mb-3 block">
+                  {t('platformLabel')}
+                  <span className="text-muted-foreground text-xs ml-2">
+                    {language === 'fr' ? '(multi-selection)' : language === 'rs' ? '(visestruki izbor)' : '(multi-select)'}
+                  </span>
+                </label>
                 <div className="grid grid-cols-2 gap-3">
                   {(['instagram', 'tiktok'] as Platform[]).map((p) => (
                     <button
                       key={p}
                       type="button"
-                      onClick={() => handlePlatformChange(p)}
+                      onClick={() => togglePlatform(p)}
                       className={cn(
                         'flex items-center justify-center gap-3 p-4 rounded-xl border transition-all',
-                        platform === p
+                        selectedPlatforms.includes(p)
                           ? 'bg-primary/10 border-primary text-primary'
                           : 'bg-white/5 border-white/10 hover:bg-white/10'
                       )}
@@ -442,23 +499,26 @@ export function GromkulatorContent() {
                 </div>
               </div>
 
-              {/* Content Type */}
+              {/* Content Type - Multi-select */}
               <div>
                 <label className="text-sm font-medium mb-3 flex items-center gap-2">
                   {t('contentType')}
+                  <span className="text-muted-foreground text-xs">
+                    {language === 'fr' ? '(multi-selection)' : language === 'rs' ? '(visestruki izbor)' : '(multi-select)'}
+                  </span>
                   <Tooltip content={t('cpmTooltip')}>
                     <Info className="h-4 w-4 text-muted-foreground cursor-help" />
                   </Tooltip>
                 </label>
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-                  {contentTypes.map((c) => (
+                  {availableContentTypes.map((c) => (
                     <button
                       key={c.id}
                       type="button"
-                      onClick={() => setContentType(c.id)}
+                      onClick={() => toggleContentType(c.id)}
                       className={cn(
                         'flex flex-col items-center gap-2 p-4 rounded-xl border transition-all',
-                        contentType === c.id
+                        selectedContentTypes.includes(c.id)
                           ? 'bg-primary/10 border-primary text-primary'
                           : 'bg-white/5 border-white/10 hover:bg-white/10'
                       )}
