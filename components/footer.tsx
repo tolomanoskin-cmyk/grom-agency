@@ -104,6 +104,14 @@ export function Footer() {
                   </Link>
                 </li>
               ))}
+              <li>
+                <Link
+                  href={`/${language}/blog`}
+                  className="text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  {t('footer.blog')}
+                </Link>
+              </li>
             </ul>
           </div>
 

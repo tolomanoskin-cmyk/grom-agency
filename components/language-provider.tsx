@@ -128,6 +128,30 @@ export const translations: Translations = {
   // Footer
   'footer.tagline': { fr: 'Influence Marketing Balkans', rs: 'Influens Marketing Balkan', en: 'Influence Marketing Balkans' },
   'footer.blog': { fr: 'Blog', rs: 'Blog', en: 'Blog' },
+  'footer.resources': { fr: 'Ressources', rs: 'Resursi', en: 'Resources' },
+
+  // Blog
+  'blog.title': { fr: 'Le Blog Grom', rs: 'Grom Blog', en: 'The Grom Blog' },
+  'blog.subtitle': {
+    fr: "Tout ce qu'il faut savoir sur l'influence marketing dans les Balkans.",
+    rs: 'Sve što treba da znate o influens marketingu na Balkanu.',
+    en: 'Everything you need to know about influencer marketing in the Balkans.',
+  },
+  'blog.readMore': { fr: "Lire l'article", rs: 'Pročitaj članak', en: 'Read article' },
+  'blog.backToBlog': { fr: 'Retour au blog', rs: 'Nazad na blog', en: 'Back to blog' },
+  'blog.readingTime': { fr: 'min de lecture', rs: 'min čitanja', en: 'min read' },
+  'blog.relatedTitle': { fr: 'À lire aussi', rs: 'Pročitajte i', en: 'Read also' },
+  'blog.ctaTitle': {
+    fr: 'Prêt à activer les Balkans ?',
+    rs: 'Spremni da aktivirate Balkan?',
+    en: 'Ready to activate the Balkans?',
+  },
+  'blog.ctaSubtitle': {
+    fr: 'Discutons de votre projet de campagne. Réponse sous 24h.',
+    rs: 'Razgovarajmo o vašem projektu kampanje. Odgovor u roku od 24h.',
+    en: "Let's discuss your campaign project. Response within 24h.",
+  },
+  'blog.ctaButton': { fr: 'Nous contacter', rs: 'Kontaktirajte nas', en: 'Contact us' },
   
   // Gromkulator steps
   'gromkulator.step1': { fr: 'Nombre de créateurs', rs: 'Broj kreatora', en: 'Number of creators' },
