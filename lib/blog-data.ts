@@ -113,17 +113,17 @@ export const blogPosts: BlogPost[] = [
       en: 'How much does an influencer campaign in the Balkans cost?',
     },
     excerpt: {
-      fr: "Une campagne standard à partir de 2 000 € TTC, soit 3 à 5 fois moins cher qu'une activation française équivalente.",
-      rs: 'Standardna kampanja od 2.000 € sa PDV-om, što je 3 do 5 puta jeftinije od ekvivalentne francuske aktivacije.',
-      en: 'A standard campaign starting at €2,000, which is 3 to 5 times cheaper than an equivalent French activation.',
+      fr: "Une tarification sur mesure, structurellement 3 à 5 fois moins chère qu'une activation française équivalente.",
+      rs: 'Cene po meri, strukturno 3 do 5 puta jeftinije od ekvivalentne francuske aktivacije.',
+      en: 'Custom pricing, structurally 3 to 5 times cheaper than an equivalent French activation.',
     },
     blocks: [
       {
         type: 'paragraph',
         text: {
-          fr: "Une campagne standard avec 3 créateurs pour 5 Reels et 12 Stories sur 1 mois est proposée à partir de 2 000 € TTC. À titre de comparaison, une campagne équivalente avec des créateurs français coûterait entre 2 500 et 5 200 €.",
-          rs: 'Standardna kampanja sa 3 kreatora za 5 Reels-a i 12 Story-ja tokom 1 meseca nudi se od 2.000 € sa PDV-om. Za poređenje, ekvivalentna kampanja sa francuskim kreatorima koštala bi između 2.500 i 5.200 €.',
-          en: 'A standard campaign with 3 creators for 5 Reels and 12 Stories over 1 month is offered starting at €2,000 incl. tax. For comparison, an equivalent campaign with French creators would cost between €2,500 and €5,200.',
+          fr: "La tarification est établie sur mesure selon le nombre de créateurs, les formats de contenu et les objectifs de la campagne. Les coûts restent structurellement 3 à 5 fois inférieurs aux équivalents français, quel que soit le périmètre du projet.",
+          rs: 'Cene se utvrđuju po meri, u zavisnosti od broja kreatora, formata sadržaja i ciljeva kampanje. Troškovi ostaju strukturno 3 do 5 puta niži od francuskih ekvivalenata, bez obzira na obim projekta.',
+          en: 'Pricing is established on a custom basis depending on the number of creators, content formats, and campaign objectives. Costs remain structurally 3 to 5 times lower than French equivalents, regardless of the project scope.',
         },
       },
       {
