@@ -109,6 +109,26 @@ export function BlogPostContent({ post }: BlogPostContentProps) {
                 </div>
               )
             }
+            if (block.type === 'cta') {
+              return (
+                <GlassCard
+                  key={i}
+                  className="my-4 p-6 flex flex-col sm:flex-row sm:items-center gap-4 border-l-2 border-l-primary"
+                  hover={false}
+                >
+                  <p className="text-base leading-relaxed text-foreground/90 flex-1">
+                    {block.text[language]}
+                  </p>
+                  <Link
+                    href={`/${language}/${block.href}`}
+                    className="inline-flex items-center justify-center gap-2 shrink-0 px-5 py-3 rounded-xl bg-primary text-primary-foreground text-sm font-medium hover:bg-primary/90 transition-all"
+                  >
+                    {block.buttonLabel[language]}
+                    <ArrowRight className="h-4 w-4" />
+                  </Link>
+                </GlassCard>
+              )
+            }
             return null
           })}
         </div>
