@@ -22,7 +22,13 @@ export function BlogPostContent({ post }: BlogPostContentProps) {
     })
   }
 
-  const related = blogPosts.filter((p) => p.slug !== post.slug).slice(0, 2)
+  // Prioritize posts in the same category, then fill with the most recent others
+  const others = blogPosts.filter((p) => p.slug !== post.slug)
+  const sameCategory = others.filter(
+    (p) => p.category.en === post.category.en,
+  )
+  const rest = others.filter((p) => p.category.en !== post.category.en)
+  const related = [...sameCategory, ...rest].slice(0, 3)
 
   return (
     <article className="pt-24 sm:pt-28 pb-12 sm:pb-16 px-4 sm:px-6 lg:px-8">
@@ -153,7 +159,7 @@ export function BlogPostContent({ post }: BlogPostContentProps) {
             <h2 className="font-display text-xl font-semibold mb-6">
               {t('blog.relatedTitle')}
             </h2>
-            <div className="grid sm:grid-cols-2 gap-6">
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {related.map((rel) => (
                 <Link
                   key={rel.slug}
@@ -164,9 +170,12 @@ export function BlogPostContent({ post }: BlogPostContentProps) {
                     <span className="inline-flex w-fit items-center px-3 py-1 rounded-full text-xs font-medium bg-primary/10 text-primary mb-3">
                       {rel.category[language]}
                     </span>
-                    <h3 className="font-display text-lg font-semibold mb-3 text-balance group-hover:text-primary transition-colors flex-1">
+                    <h3 className="font-display text-lg font-semibold mb-2 text-balance group-hover:text-primary transition-colors">
                       {rel.title[language]}
                     </h3>
+                    <p className="text-sm text-muted-foreground leading-relaxed mb-4 line-clamp-3 flex-1">
+                      {rel.excerpt[language]}
+                    </p>
                     <span className="inline-flex items-center gap-1.5 text-sm font-medium text-primary mt-auto">
                       {t('blog.readMore')}
                       <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
