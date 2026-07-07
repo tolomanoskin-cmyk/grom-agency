@@ -152,6 +152,23 @@ export const translations: Translations = {
     en: "Let's discuss your campaign project. Response within 24h.",
   },
   'blog.ctaButton': { fr: 'Nous contacter', rs: 'Kontaktirajte nas', en: 'Contact us' },
+  'blog.searchPlaceholder': {
+    fr: 'Rechercher un article...',
+    rs: 'Pretražite članak...',
+    en: 'Search an article...',
+  },
+  'blog.filterAll': { fr: 'Tous', rs: 'Svi', en: 'All' },
+  'blog.noResults': {
+    fr: 'Aucun article ne correspond à votre recherche.',
+    rs: 'Nijedan članak ne odgovara vašoj pretrazi.',
+    en: 'No article matches your search.',
+  },
+  'blog.resultsCount': {
+    fr: 'article(s)',
+    rs: 'članak(a)',
+    en: 'article(s)',
+  },
+  'blog.clearFilters': { fr: 'Réinitialiser', rs: 'Poništi', en: 'Reset' },
   
   // Gromkulator steps
   'gromkulator.step1': { fr: 'Nombre de créateurs', rs: 'Broj kreatora', en: 'Number of creators' },
