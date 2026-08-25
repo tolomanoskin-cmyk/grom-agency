@@ -128,6 +128,7 @@ export const translations: Translations = {
   // Footer
   'footer.tagline': { fr: 'Influence Marketing Balkans', rs: 'Influens Marketing Balkan', en: 'Influence Marketing Balkans' },
   'footer.blog': { fr: 'Blog', rs: 'Blog', en: 'Blog' },
+  'footer.privacy': { fr: 'Politique de confidentialité', rs: 'Politika privatnosti', en: 'Privacy policy' },
   'footer.resources': { fr: 'Ressources', rs: 'Resursi', en: 'Resources' },
 
   // Blog

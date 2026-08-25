@@ -112,6 +112,14 @@ export function Footer() {
                   {t('footer.blog')}
                 </Link>
               </li>
+              <li>
+                <Link
+                  href={`/${language}/politique-de-confidentialite`}
+                  className="text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  {t('footer.privacy')}
+                </Link>
+              </li>
             </ul>
           </div>
 
